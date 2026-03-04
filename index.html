@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Canvas · ONE GOAL TEAM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e9eef3 0%, #d9e0e8 100%);
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .canvas {
+            max-width: 1300px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 30px 50px -15px rgba(0, 20, 40, 0.25), 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+            padding: 2rem 2rem 2rem 2rem;
+        }
+
+        /* header section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f4fa;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .team-id {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .code {
+            font-family: 'Fira Mono', 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+            background: #1e2b3c;
+            color: #b7e4fa;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            letter-spacing: 0.5px;
+            border: 1px solid #2d4055;
+        }
+
+        .team-name {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1F2A3F, #2C3D5E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .version {
+            background: #ecf3fa;
+            color: #1f3a5f;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            border: 1px solid #bdcbd9;
+        }
+
+        /* main grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr 1fr;
+            gap: 1.2rem;
+        }
+
+        /* generic card */
+        .card {
+            background: #f8fafd;
+            border-radius: 1.8rem;
+            padding: 1.4rem 1.3rem 1.6rem 1.3rem;
+            box-shadow: 0 4px 12px rgba(0, 20, 30, 0.04);
+            border: 1px solid rgba(207, 219, 234, 0.5);
+            transition: all 0.1s ease;
+            height: fit-content;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #4a5e7a;
+            margin-bottom: 1.2rem;
+            border-left: 4px solid #2f5575;
+            padding-left: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-title span {
+            background: #d4e0ed;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            padding: 2px 10px;
+            color: #1d3148;
+        }
+
+        /* goals & success criteria */
+        .goal-block {
+            margin-bottom: 1.6rem;
+        }
+
+        .goal-main {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #0b253c;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            background: #eef3f9;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            border-left: 4px solid #427ab0;
+        }
+
+        .subtext {
+            font-size: 0.9rem;
+            color: #335;
+            margin: 0.5rem 0 0.2rem 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .bullet-list {
+            list-style: none;
+        }
+
+        .bullet-list li {
+            font-size: 0.95rem;
+            padding: 0.4rem 0 0.4rem 1.6rem;
+            position: relative;
+            color: #1d2b3f;
+            line-height: 1.35;
+        }
+
+        .bullet-list li::before {
+            content: "▹";
+            position: absolute;
+            left: 0.2rem;
+            color: #2f6e9c;
+            font-weight: 700;
+        }
+
+        /* role cards */
+        .role-item {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1rem 1rem 1rem 1.2rem;
+            margin-bottom: 0.9rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.02);
+            border: 1px solid #dde5ef;
+        }
+
+        .role-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1d3d5c;
+            margin-bottom: 0.3rem;
+        }
+
+        .role-name .badge {
+            background: #1d3d5c;
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+        }
+
+        .owner-line {
+            font-weight: 600;
+            color: #1f6182;
+            font-size: 0.9rem;
+            margin: 0.2rem 0 0.5rem 0;
+            border-bottom: 1px dashed #bccad8;
+            padding-bottom: 0.25rem;
+        }
+
+        .duty-list {
+            list-style: none;
+            margin-top: 0.3rem;
+        }
+
+        .duty-list li {
+            font-size: 0.9rem;
+            padding: 0.2rem 0 0.2rem 1.3rem;
+            position: relative;
+            color: #263b4e;
+        }
+
+        .duty-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0.2rem;
+            color: #2a6291;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* values grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        .value-chip {
+            background: white;
+            border-radius: 40px;
+            padding: 0.5rem 0.7rem;
+            font-weight: 550;
+            font-size: 0.9rem;
+            color: #1a3048;
+            box-shadow: 0 2px 5px #dfe6ef;
+            text-align: center;
+            border: 1px solid #ccd9ea;
+        }
+
+        /* rules section */
+        .rule-group {
+            margin-bottom: 1.4rem;
+        }
+
+        .rule-group h4 {
+            font-size: 0.95rem;
+            color: #1c3b5b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 650;
+        }
+
+        .rule-group h4 i {
+            font-style: normal;
+            font-size: 1.2rem;
+        }
+
+        .meeting-detail {
+            background: #e3ecf5;
+            border-radius: 1rem;
+            padding: 0.6rem 1rem;
+        }
+
+        .meeting-line {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            padding: 0.2rem 0;
+        }
+
+        .meeting-line strong {
+            min-width: 100px;
+            color: #1d4465;
+        }
+
+        .deadline-rule {
+            background: #fff3e0;
+            border-left: 4px solid #e67e22;
+            padding: 0.7rem 1rem;
+            border-radius: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .separator-dot {
+            width: 5px;
+            height: 5px;
+            background: #5f7d9c;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 6px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #cbd6e3;
+            margin: 0.7rem 0;
+        }
+
+        /* activity extra */
+        .call-note {
+            background: #dde9f5;
+            border-radius: 2rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 0.4rem 0 0.2rem 0;
+        }
+
+        .footer-note {
+            margin-top: 1.5rem;
+            text-align: right;
+            font-size: 0.75rem;
+            color: #6e8bb0;
+            border-top: 1px dashed #b9cadd;
+            padding-top: 1rem;
+        }
+
+        @media (max-width: 800px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="canvas">
+    <!-- header: team code & name -->
+    <div class="header">
+        <div class="team-id">
+            <span class="code">CCD001</span>
+            <span class="team-name">ONE GOAL TEAM</span>
+        </div>
+        <div class="version">TEAM CANVAS – VERSION 1</div>
+    </div>
+
+    <!-- main grid: 3 columns (goals left / roles middle / values+rules right) -->
+    <div class="grid">
+        <!-- COLUMN 1: GOALS + SUCCESS CRITERIA -->
+        <div class="card">
+            <div class="card-title">🎯 GOALS</div>
+            <div class="goal-block">
+                <div class="goal-main">Xây dựng 1 workflow/MVP có thể demo và ứng dụng thực tế cho doanh nghiệp dựa trên nền tảng Cleeksy DOP.</div>
+                <div style="margin-top: 0.8rem;"></div>
+                <div class="goal-main" style="background: #eaf1f9;">Thiết lập mô hình làm việc chuyên nghiệp giữa 3 người: vai trò rõ ràng, đo lường được, có thể mở rộng.</div>
+            </div>
+
+            <div class="card-title" style="margin-top: 1.8rem;">✅ SUCCESS CRITERIA</div>
+            <ul class="bullet-list">
+                <li>Có sản phẩm chạy được (demo hoàn chỉnh).</li>
+                <li>Quy trình triển khai rõ ràng và tái sử dụng được.</li>
+                <li>Mỗi thành viên hiểu rõ vai trò & chịu trách nhiệm phần việc của mình.</li>
+                <li>Không có conflict do thiếu minh bạch hoặc thiếu rule.</li>
+            </ul>
+        </div>
+
+        <!-- COLUMN 2: ROLES & OWNERSHIP -->
+        <div class="card">
+            <div class="card-title">🧑‍🤝‍🧑 ROLES & OWNERSHIP</div>
+
+            <!-- Thinh Dang -->
+            <div class="role-item">
+                <div class="role-name">
+                    Thinh Dang
+                    <span class="badge">Team Leader</span>
+                </div>
+                <div class="owner-line">🧩 Owner: Direction & Architecture</div>
+                <ul class="duty-list">
+                    <li>Định hướng & chia task</li>
+                    <li>Thiết kế kiến trúc tổng thể</li>
+                    <li>Theo dõi tiến độ & đảm bảo execution</li>
+                </ul>
+            </div>
+
+            <!-- Trung Nguyen -->
+            <div class="role-item">
+                <div class="role-name">
+                    Trung Nguyen
+                </div>
+                <div class="owner-line">⚙️ Owner: System & Infrastructure</div>
+                <ul class="duty-list">
+                    <li>Thiết kế & tối ưu kiến trúc hệ thống</li>
+                    <li>Vận hành & đảm bảo tính ổn định</li>
+                </ul>
+            </div>
+
+            <!-- Dung Phan -->
+            <div class="role-item">
+                <div class="role-name">
+                    Dung Phan
+                </div>
+                <div class="owner-line">🔍 Owner: Process & Research</div>
+                <ul class="duty-list">
+                    <li>Phân tích quy trình</li>
+                    <li>Thiết kế flow & kiểm thử</li>
+                    <li>Tối ưu trải nghiệm & tính thực tế</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COLUMN 3: VALUES + RULES & ACTIVITIES -->
+        <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+            <!-- VALUES card -->
+            <div class="card">
+                <div class="card-title">💎 VALUES</div>
+                <div class="values-grid">
+                    <div class="value-chip">Accountability</div>
+                    <div class="value-chip">Transparency</div>
+                    <div class="value-chip">Đúng giờ & tôn trọng cam kết</div>
+                    <div class="value-chip">Mỗi người đều có tiếng nói</div>
+                </div>
+            </div>
+
+            <!-- RULES & ACTIVITIES card -->
+            <div class="card">
+                <div class="card-title">⚙️ RULES & ACTIVITIES</div>
+
+                <!-- Meeting block -->
+                <div class="rule-group">
+                    <h4><i>📅</i> Meeting</h4>
+                    <div class="meeting-detail">
+                        <div class="meeting-line"><strong>Tối Thứ 3 – 20:00</strong> (chính)</div>
+                        <div class="meeting-line"><strong>Backup: Sáng Thứ 4 – 11:30</strong></div>
+                        <div class="call-note">📞 Call nhanh khi cần (≤ 20 phút)</div>
+                    </div>
+                </div>
+
+                <!-- Conflict handling -->
+                <div class="rule-group">
+                    <h4><i>⚖️</i> Conflict Handling</h4>
+                    <ul class="bullet-list" style="margin-top: 0;">
+                        <li>Trình bày quan điểm + lý do</li>
+                        <li>So sánh ưu/nhược điểm theo mục tiêu chung</li>
+                        <li>Nếu chưa thống nhất → Leader quyết định cuối cùng</li>
+                    </ul>
+                </div>
+
+                <!-- Deadline rule -->
+                <div class="rule-group">
+                    <h4><i>⏳</i> Deadline Rule</h4>
+                    <div class="deadline-rule">
+                        <span style="display: block;">📢 Phải báo trước nếu có rủi ro trễ</span>
+                        <span style="display: block; margin-top: 5px;">☕ Trễ không lý do chính đáng → mời team cà phê</span>
+                    </div>
+                </div>
+
+                <!-- tiny extra: accountability reminder (optional, but fits) -->
+                <hr>
+                <div style="font-size: 0.85rem; color: #2f4f6e; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between;">
+                    <span>🔹 transparency first</span>
+                    <span>🔹 mở rộng được</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- tiny footer: rule of thumb -->
+    <div class="footer-note">
+        ONE GOAL · rõ ràng – đo lường – chuyên nghiệp
+    </div>
+</div>
+</body>
+</html>
