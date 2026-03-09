@@ -320,6 +320,67 @@
             margin: 0.4rem 0 0.2rem 0;
         }
 
+        /* team intro section */
+        .team-intro {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem 1rem;
+            background: linear-gradient(135deg, #f0f4fa 0%, #e8eef6 100%);
+            border-radius: 2rem;
+        }
+
+        .member {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .member-photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 15px rgba(0, 20, 40, 0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .member-photo:hover {
+            transform: scale(1.05);
+        }
+
+        .member-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #1d3d5c;
+        }
+
+        .member-role {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            background: #1d3d5c;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+        }
+
+        .member-owner {
+            font-size: 0.8rem;
+            color: #4a5e7a;
+            font-weight: 500;
+        }
+
+        @media (max-width: 800px) {
+            .team-intro {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+        }
+
         .footer-note {
             margin-top: 1.5rem;
             text-align: right;
@@ -348,7 +409,28 @@
             <span class="code">CCD001</span>
             <span class="team-name">ONE GOAL TEAM</span>
         </div>
-        <div class="version">TEAM CANVAS – VERSION 1</div>
+    </div>
+
+    <!-- team intro -->
+    <div class="team-intro">
+        <div class="member">
+            <img class="member-photo" src="Profile Images/Thinh Dang.jpg" alt="Thinh Dang">
+            <span class="member-name">Thinh Dang</span>
+            <span class="member-role">Team Leader</span>
+            <span class="member-owner">Direction & Architecture</span>
+        </div>
+        <div class="member">
+            <img class="member-photo" src="Profile Images/Trung Nguyen.png" alt="Trung Nguyen">
+            <span class="member-name">Trung Nguyen</span>
+            <span class="member-role">Member</span>
+            <span class="member-owner">System & Infrastructure</span>
+        </div>
+        <div class="member">
+            <img class="member-photo" src="Profile Images/Dung Phan.png" alt="Dung Phan">
+            <span class="member-name">Dung Phan</span>
+            <span class="member-role">Member</span>
+            <span class="member-owner">Process & Research</span>
+        </div>
     </div>
 
     <!-- main grid: 3 columns (goals left / roles middle / values+rules right) -->
